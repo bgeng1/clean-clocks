@@ -5,24 +5,32 @@ interface clockProps {
   timeZone: string;
 }
 
+interface timeData {
+  seconds: number;
+  minutes: number;
+  hours: number;
+}
+
 const Clock: React.FC<clockProps> = ({ timeZone }) => {
-  const [time, setTime] = useState(Date());
-  let intervalId = useRef<number>();
   //do we want refs for these?
   const locales = "en-us";
   const options: Intl.DateTimeFormatOptions = {
     timeStyle: "medium",
     timeZone,
   };
-  let timeData = useRef({
+  const getTimeString = (): string =>
+    new Date().toLocaleTimeString(locales, options);
+
+  const [time, setTime] = useState<string>(getTimeString());
+  let intervalId = useRef<number>();
+  let timeData = useRef<timeData>({
     seconds: 0,
     minutes: 0,
     hours: 0,
   });
 
-  //we can make this var even more type safe
   const getTimePart = (part: "second" | "minute" | "hour"): number => {
-    const partOptions = {
+    const partOptions: Intl.DateTimeFormatOptions = {
       [part]: "numeric",
       timeZone,
     };
@@ -31,7 +39,7 @@ const Clock: React.FC<clockProps> = ({ timeZone }) => {
 
   useEffect(() => {
     intervalId.current = setInterval(() => {
-      setTime(new Date().toLocaleTimeString(locales, options));
+      setTime(getTimeString());
       timeData.current = {
         seconds: getTimePart("second"),
         minutes: getTimePart("minute"),
