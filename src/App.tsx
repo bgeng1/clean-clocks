@@ -1,40 +1,24 @@
 import { useState } from "react";
 import "./App.css";
-import Clock from "./Clock";
-import { zoneCodes } from "../timeZoneCodes";
+import { ClockComponent } from "./ClockComponent";
 
 function App() {
-  const [zone, setZone] = useState<string>("UTC");
-
-  const options = zoneCodes
-    .sort(function (a, b) {
-      var textA = a.city.toUpperCase();
-      var textB = b.city.toUpperCase();
-      return textA < textB ? -1 : textA > textB ? 1 : 0;
-    })
-    .map((c) => {
-      return (
-        <option key={c.city} value={c.timeZone}>
-          {c.city}
-        </option>
-      );
-    });
+  const [clocks, setClocks] = useState<Array<any>>([]);
 
   return (
     <div className="App">
-      <header className="App-header">
-        <p>What time is it in:</p>
-        <select
-          onChange={(e) => {
-            setZone(e.target.value);
-            console.log(zone);
+      <p>What time is it in:</p>
+      <div className="clocks-container">
+        <ClockComponent />
+        {clocks}
+        <button
+          onClick={() => {
+            setClocks(clocks.concat(<ClockComponent />));
           }}
         >
-          {options}
-        </select>
-        <Clock timeZone={zone} />
-        <br />
-      </header>
+          add new
+        </button>
+      </div>
     </div>
   );
 }
