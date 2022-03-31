@@ -15,6 +15,7 @@ function App() {
           onClick={() => {
             setClocks(clocks.concat(<ClockComponent />));
           }}
+          className="add-button"
         >
           add new
         </button>
