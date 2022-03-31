@@ -105,3 +105,10 @@
 .city-select {
   font-size: 20px;
 }
+
+.delete-button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-weight: bolder;
+}
