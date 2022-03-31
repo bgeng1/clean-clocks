@@ -21,14 +21,6 @@ const Clock: React.FC<clockProps> = ({ timeZone }) => {
   const getTimeString = (): string =>
     new Date().toLocaleTimeString(locales, options);
 
-  const [time, setTime] = useState<string>(getTimeString());
-  let intervalId = useRef<number>();
-  let timeData = useRef<timeData>({
-    seconds: 0,
-    minutes: 0,
-    hours: 0,
-  });
-
   const getTimePart = (part: "second" | "minute" | "hour"): number => {
     const partOptions: Intl.DateTimeFormatOptions = {
       [part]: "numeric",
@@ -36,6 +28,14 @@ const Clock: React.FC<clockProps> = ({ timeZone }) => {
     };
     return parseInt(new Date().toLocaleTimeString(locales, partOptions));
   };
+
+  const [time, setTime] = useState<string>(getTimeString());
+  let intervalId = useRef<number>();
+  let timeData = useRef<timeData>({
+    seconds: 0,
+    minutes: 0,
+    hours: 0,
+  });
 
   useEffect(() => {
     intervalId.current = setInterval(() => {
