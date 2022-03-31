@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Timeface } from "./Timeface";
 
 interface clockProps {
@@ -30,27 +30,27 @@ const Clock: React.FC<clockProps> = ({ timeZone }) => {
   };
 
   const [time, setTime] = useState<string>(getTimeString());
-  let intervalId = useRef<number>();
+  let rafId = useRef<number>();
   let timeData = useRef<timeData>({
     seconds: 0,
     minutes: 0,
     hours: 0,
   });
 
+  const animate = useCallback(() => {
+    timeData.current = {
+      seconds: getTimePart("second"),
+      minutes: getTimePart("minute"),
+      hours: getTimePart("hour"),
+    };
+    setTime(getTimeString());
+    rafId.current = requestAnimationFrame(animate);
+  }, [timeZone]);
+
   useEffect(() => {
-    intervalId.current = setInterval(() => {
-      setTime(getTimeString());
-      timeData.current = {
-        seconds: getTimePart("second"),
-        minutes: getTimePart("minute"),
-        hours: getTimePart("hour"),
-      };
-    }, 1000);
-
+    rafId.current = requestAnimationFrame(animate);
     return () => {
-      console.log("clearing interval");
-
-      clearInterval(intervalId.current);
+      rafId.current && cancelAnimationFrame(rafId.current);
     };
   }, [timeZone]);
 
