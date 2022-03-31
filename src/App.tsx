@@ -7,6 +7,7 @@ function App() {
 
   return (
     <div className="App">
+      <h1>Clean Clocks</h1>
       <p>What time is it in:</p>
       <div className="clocks-container">
         <ClockComponent />

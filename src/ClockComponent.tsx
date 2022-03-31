@@ -22,6 +22,7 @@ export const ClockComponent = () => {
   return (
     <div className="clock-component">
       <select
+        className="city-select"
         onChange={(e) => {
           setZone(e.target.value);
           console.log(zone);
