@@ -9,7 +9,7 @@ export const Timeface: React.FC<timefaceProps> = ({ time }) => {
   const hoursAngle = 30 * hours + 0.5 * minutes;
 
   return (
-    <div className="timeface">
+    <div className="timeface" data-testid="timeface">
       <div
         className="hours"
         style={{ transform: `rotateZ(${hoursAngle}deg)` }}
