@@ -55,10 +55,10 @@ const Clock: React.FC<clockProps> = ({ timeZone }) => {
   }, [timeZone]);
 
   return (
-    <>
+    <div data-testid="clock">
       <p>{time}</p>
       <Timeface time={timeData.current} />
-    </>
+    </div>
   );
 };
 

@@ -13,10 +13,6 @@ function App() {
   clocksRef.current = clocks;
   const keyCount = useRef<number>(0);
 
-  const getKey = () => {
-    return keyCount.current++;
-  };
-
   const DeleteButton = ({ clocksRef, id }: deleteButtonProps) => {
     return (
       <button
@@ -38,7 +34,7 @@ function App() {
   );
 
   const addClock = () => {
-    const id = getKey();
+    const id = keyCount.current++;
     setClocks([...clocks, <DeleteContainer key={id} id={id} />]);
   };
 
